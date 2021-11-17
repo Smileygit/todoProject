@@ -1,0 +1,11 @@
+html {
+      background-color: rgb(100, 155, 237);
+      height: 100%;
+  }
+
+#title { 
+      text-align: center;
+      font-size: xx-large;
+      color: rgb(218, 221, 212);
+
+  }
