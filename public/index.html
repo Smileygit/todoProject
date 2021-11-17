@@ -20,8 +20,9 @@
     </div>
 
     <div class = "addItemBox">
-    <input id="inpHeading" type="text" cols="20" /><br>
-    <textarea id="inpBlogtext" cols="20" rows="2"></textarea><br>
+    <p>Note theme:</p>
+    <textarea id="inpHeading" cols="20" rows="1"></textarea><br>
+    <textarea id="inpBlogtext" cols="20" rows="3"></textarea><br>
     <button id="btnCreate">Add item</button><br>
     <h3 id="txtResult"></h3>
 
@@ -47,7 +48,7 @@
 
     btnCreate.addEventListener('click', async function (evt) {
 
-        let url = "/";
+        let url = "/todoposts";
 
         let updata = {
             heading: inpHeading.value,
@@ -85,10 +86,8 @@
 
     async function listBlogPosts() {
 
-        let url = "/";
+        let url = "/todoposts";
 
-        //cant seem to fetch and list blogpost when moved to index file.
-        //Can try to seperate the javascript and index.html files.
 
         try {
             let response = await fetch(url);
@@ -99,7 +98,7 @@
             
             }
          
-            console.log('test');
+
             container.innerHTML = ""; //delete previous content
 
             for (let value of data) {
