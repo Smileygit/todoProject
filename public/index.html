@@ -10,10 +10,10 @@
     <!----------- HTML-elements -------------->
     <h1 id = "title">To do List</h1>
     <form action="create.html">
-        <button type="submit">Edit List</button>
+        <button id = "button1" type="submit">Edit List</button>
     </form>
     <form action="posttodolist.html">
-        <button type="submit">View Lists</button>
+        <button id = "button2" type="submit">View Lists</button>
     </form>
 
     
@@ -36,6 +36,21 @@
             font-size: xx-large;
             color: rgb(218, 221, 212);
     
+        }
+
+        #button1 {
+            display: inline-block;
+            padding: 15px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: rgb(8, 8, 8);
+            background-color: #eeece6;
+            border: none;
+            border-radius: 50px;
+
         }
     
     
