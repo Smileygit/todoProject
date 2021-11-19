@@ -5,10 +5,17 @@
   font-family: 'Poppins', sans-serif;
 }
 body {
-  width: 100%;
+  width: auto;
   height: auto;
 
   background: linear-gradient(to left, #1b0f61 0%, #4ab66a 100%);
+}
+
+#title { 
+  text-align: center;
+  font-size: xx-large;
+  color: rgb(218, 221, 212);
+
 }
 
 .application {
@@ -56,3 +63,45 @@ body {
   border-radius: 5px;
   text-align: center;
 }
+
+
+/*--------------- Button css ---------------*/
+.buttonIndex{
+  background-color: #0dc2cf;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border: 2px solid #0dc2cf;
+}
+.buttonCreate {
+  background-color: #0dc2cf;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border: 2px solid #0dc2cf;
+}
+
+.button:hover {
+  background-color: transparent; /* Green */
+  color: white;
+}
+
+.centerBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+/*--------------- End Button css ---------------*/
