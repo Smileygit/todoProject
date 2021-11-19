@@ -2,17 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="stylesheet" href="style.css"> 
     <title>TestClient</title>
 </head>
 <body>
 
     <!----------- HTML-elements -------------->    
-    <input id="inpHeading" type="text" /><br>
-    <textarea id="inpBlogtext" cols="80" rows="10"></textarea><br>
-    <button id="btnCreate">Create post</button><br>
+    <input id="inpHeading" type="text" placeholder="To do.." /><br>
+    <textarea id="inpBlogtext" cols="80" rows="10" placeholder="Description.."></textarea><br>
+
+    <!--------Time select-------->
+    <label for="appt">Choose a time for your task:</label>
+
+    <input type="time" id="appt" name="appt"
+       min="09:00" max="18:00" required>
+    </br>
+    <!--------Ende Time select-------->
+
+    <button class = "button buttonCreate" id="btnCreate">Create post</button><br>
     <h3 id="txtResult">Result...</h3>
-        
+    
     <!------------- JavaScript --------------->
     <script>
         
@@ -20,6 +30,19 @@
         let inpBlogtext = document.getElementById('inpBlogtext');
         let btnCreate = document.getElementById('btnCreate');
         let txtResult = document.getElementById('txtResult');
+
+    /*-----------Time----------*/
+        let date = new Date();
+        let options = {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false
+        };
+        let timeString = date.toLocaleString('en-US', options);
+
+        let timeControl = document.querySelector('input[type="time"]');
+        timeControl.value = timeString;
+    /*-----------End Time----------*/
 
         btnCreate.addEventListener('click', async function(evt) {
             

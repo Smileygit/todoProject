@@ -3,26 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="style.css"> 
     <title>TestClient</title>
 </head>
 <body>
 
     <!----------- HTML-elements -------------->
-    <h1 id = "title">My To do List</h1>
-    <div class="container">
-    <div class="create">
-    <form action="create.html">
-        <button id = "button1" type="submit">Edit List</button>
-    </form>
+    <h1 id = "title">To do List</h1>
+    <div class="centerBtn">
+        <a href="create.html" class="button buttonIndex">Edit List</a>
+        <a href="posttodolist.html" class="button buttonIndex">Show List</a>
     </div>
-    <div class="view">
-    <form action="posttodolist.html">
-        <button id = "button2" type="submit">View Lists</button>
-    </form>
-    </div>
-    </div>
-    
-
     
         
     <!------------- JavaScript --------------->
@@ -33,48 +24,7 @@
 
     <!---------------- CSS ------------------->
     <style> 
-        html {
-            background-color: rgb(100, 155, 237);
-            height: 100%;
-        }
-    
-        #title { 
-            text-align: center;
-            font-size: xx-large;
-            color: rgb(218, 221, 212);
-    
-        }
 
-        #button1, #button2{
-            display: inline-block;
-            padding: 15px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            outline: none;
-            color: rgb(8, 8, 8);
-            background-color: #eeece6;
-            border: none;
-            border-radius: 50px;
-            position: absolute;
-            width: auto;
-
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: auto auto;
-            padding: 10px;
-            }
-
-        .create, .view {
-            align-content: center;
-        }
-       
-
-      
-    
     
         </style>
     
