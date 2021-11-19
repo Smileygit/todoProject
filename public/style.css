@@ -9,9 +9,9 @@ body {
 
 }
 
-/*
+
 #button1, #button2{
-  display: inline-block;
+  
   padding: 15px 15px;
   font-size: 16px;
   cursor: pointer;
@@ -22,12 +22,12 @@ body {
   background-color: #eeece6;
   border: none;
   border-radius: 50px;
-  position: absolute;
+  
   width: auto;
 
 }
 
-*/
+
 
 .container {
   display: grid;  
@@ -35,6 +35,9 @@ body {
   justify-items: center;
 }
 
-
+.create, .view {
+  
+  display: inline-block;
+}
 
 
