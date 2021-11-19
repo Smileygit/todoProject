@@ -34,7 +34,7 @@ html {
   }
 
 .create, .view {
-  display: flex;
+  align-self: center;
 }
 
 
