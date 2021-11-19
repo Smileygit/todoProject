@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>TestClient</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+   
+    <div class="container" id="cont">
+        <div class="header">
+            <button type="button" id="refresh" onclick="refresh()"><i class="fa fa-refresh"></i></button>
+
+            <div id="header-title">
+                <h1>TO DO LIST</h1>
+
+            </div>
+        </div>
+
+        <div id="box">
+            <h1 id="box-title">hvor du kan legge plan...</h1>
+        </div>
+        <div id="Add">
+            <input type="text" placeholder="Add your List.." id="inp">
+            <button type="button" onclick="add()" id="addlist"><i class="fa fa-plus"></i></button>
+        </div>
+    </div>
+    <!---------js code--------------->
+ <script src="ToDo.js"></script>
+    
+</body>
+
+</html>
