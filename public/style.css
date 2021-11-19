@@ -31,12 +31,12 @@ html {
   display: grid;
   grid-template-columns: auto auto;
   padding: 10px;
+  justify-items: center;
   }
 
 .create, .view {
   display:flexbox;
-  right: 100px;
-  left: 100px;
+  
 }
 
 
