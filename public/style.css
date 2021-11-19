@@ -1,2 +1,40 @@
+html {
+  background-color: rgb(100, 155, 237);
+  height: 100%;
+}
+
+#title { 
+  text-align: center;
+  font-size: xx-large;
+  color: rgb(218, 221, 212);
+
+}
+
+#button1, #button2{
+  display: inline-block;
+  padding: 15px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: rgb(8, 8, 8);
+  background-color: #eeece6;
+  border: none;
+  border-radius: 50px;
+  position: absolute;
+  width: auto;
+
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+  }
+
+.create, .view {
+  display: flex;
+}
 
 
