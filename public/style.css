@@ -28,14 +28,13 @@ html {
 }
 
 .container {
-  display: grid;
-  grid-template-columns: auto auto;
+  display: grid;  
   padding: 10px;
   justify-items: center;
   }
 
 .create, .view {
-  display:flexbox;
+  
   
 }
 
