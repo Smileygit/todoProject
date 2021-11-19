@@ -1,58 +1,40 @@
-* {
-  margin: 50;
-  padding: 50;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-body {
-  width: 100%;
-  height: auto;
-
-  background: linear-gradient(to left, #1b0f61 0%, #4ab66a 100%);
+html {
+  background-color: rgb(100, 155, 237);
+  height: 100%;
 }
 
-.application {
-  height: 600px;
+#title { 
+  text-align: center;
+  font-size: xx-large;
+  color: rgb(218, 221, 212);
+
+}
+
+#button1, #button2{
+  display: inline-block;
+  padding: 15px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: rgb(8, 8, 8);
+  background-color: #eeece6;
+  border: none;
+  border-radius: 50px;
+  position: absolute;
+  width: auto;
+
+}
+
+.container {
   display: grid;
-  grid-template-columns: 0.2fr 1.2fr 2.4fr 0.2fr;
-  grid-template-rows: 0.5fr 0.8fr 1.7fr 0.5fr;
-  gap: 5px 5px;
-  grid-auto-flow: column dense;
-  justify-content: stretch;
-  align-content: stretch;
-  justify-items: stretch;
-  align-items: stretch;
+  grid-template-columns: auto auto;
+  padding: 10px;
+  }
 
-  grid-template-areas:
-    '. . . .'
-    '. header listBox .'
-    '. addItemBox listBox .'
-    '. . . .';
+.create, .view {
+  display: flex;
 }
 
-.header {
-  padding-top: 25px;
-  grid-area: header;
-  background: #fff;
-  box-shadow: 0px 40px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  text-align: center;
-}
 
-.listBox {
-  grid-area: listBox;
-  background: #fff;
-  box-shadow: 0px 40px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  text-align: center;
-  overflow-y: scroll;
-}
-
-.addItemBox {
-  padding: 15px;
-  grid-area: addItemBox;
-  background: #fff;
-  box-shadow: 0px 40px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  text-align: center;
-}
