@@ -48,7 +48,8 @@ body {
   overflow-y: scroll;
 }
 
-.addItemBox {
+.addItemBox,
+.logInBox {
   padding: 15px;
   grid-area: addItemBox;
   background: #fff;
