@@ -42,10 +42,16 @@
     let inpBlogtext = document.getElementById('inpBlogtext');
     let btnCreate = document.getElementById('btnCreate');
     let txtResult = document.getElementById('txtResult');
-    let logInBtn = document.getElementById('btnLogIn')
+
+    let btnLogIn = document.getElementById('btnLogIn')
 
 
     // ----------------------------------------
+
+    btnLogIn.addEventListener('click', async function(evt) {
+
+
+    })
 //Add item
 
     btnCreate.addEventListener('click', async function (evt) {
@@ -71,67 +77,97 @@
                 throw data.error;
             }
 
-            //Action when blogpost sucsessfully created
-            console.log(updata)
             listBlogPosts();
-            txtResult.innerHTML = data.msg;
+            // txtResult.innerHTML = data.msg;
         }
         catch (error) {
             console.log(error);
             txtResult.innerHTML = "Something went wrong - check the console window";
         }
     });
+
+
     // ----------- Add item done
 
     //------------------------ Show list
 
 
-    async function listBlogPosts() {
+            async function listBlogPosts() {
 
-        let url = "/todoposts";
+                    let url = "/todoposts";
 
+                    try {
+                        let response = await fetch(url);
+                        let data = await response.json();
 
-        try {
-            let response = await fetch(url);
-            let data = await response.json();
+                        if (response.status != 200) {
+                            throw data.error;
+                        }
 
-            if (response.status != 200) {
-                throw data.error;
-            
-            }
-         
+                        container.innerHTML = ""; //delete previous content
 
-            container.innerHTML = ""; //delete previous content
+                        for (let value of data) {
 
-            for (let value of data) {
+                            let date = new Date(value.date);
 
-                let date = new Date(value.date);
+                            let html = "<h2>" + value.heading + "</h2>";
+                            html += "<p>" + date.toLocaleDateString() + "</p>";
+                            html += "<p>" + value.blogtext + "</p><hr>";
 
-                let html = "<h2>" + value.heading + "</h2>";
-                html += "<p>" + date.toLocaleDateString() + "</p>";
-                html += "<p>" + value.blogtext + "</p><hr>";
+                            let div = document.createElement("div");
+                            div.innerHTML = html;
+                            container.appendChild(div);
 
-                let div = document.createElement("div");
-                div.innerHTML = html;
-                container.appendChild(div);
+                            let delbtn = document.createElement("button");
+                            delbtn.innerHTML = "Delete";
 
-                let delbtn = document.createElement("button");
-                delbtn.innerHTML = "Delete";
+                            delbtn.addEventListener('click', function (evt) {
+                                deleteBlogPost(value.id);
+                            });
 
-                delbtn.addEventListener('click', function (evt) {
-                    deleteBlogPost(value.id);
-                });
+                            div.insertBefore(delbtn, div.lastElementChild);
+                        }
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
+                }
 
-                div.insertBefore(delbtn, div.lastElementChild);
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
+                //-----------------------------------------------
+                async function deleteBlogPost(blogpostId) {
 
-    // start ----------------------------------------
-    listBlogPosts();
+                    let url = "/todoposts";
+
+                    let updata = {
+                        id: blogpostId
+                    }
+
+                    let cfg = {
+                        method: "DELETE",
+                        headers: { "content-type": "application/json" },
+                        body: JSON.stringify(updata)
+                    }
+
+                    try {
+                        let response = await fetch(url, cfg);
+                        let data = await response.json();
+
+                        if (response.status != 200) {
+                            throw data.error;
+                        }
+
+                        listBlogPosts(); //refresh the list                
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                // start ----------------------------------------
+                listBlogPosts();
+    
+// show list done
+
 
     </script>
 
