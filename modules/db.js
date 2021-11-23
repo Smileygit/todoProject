@@ -1,7 +1,7 @@
 // setup connection -------------------------
 const pg = require('pg');
 const dbURI =
-  'postgres://bhjlhxpyibkoix:175c4bbc8fe62a3070c3cf8497ecd469aada78157b8fdaaea83c734716731636@ec2-54-155-92-75.eu-west-1.compute.amazonaws.com:5432/dd0mdr65qkh4eo';
+  'postgres://ljqduddidyosys:b34d51271de1e97771741fad163a9ab083dbb227afdda3748839e2fe1f470520@ec2-18-202-67-49.eu-west-1.compute.amazonaws.com:5432/df3heveirs0pji';
 const connstring = process.env.DATABASE_URL || dbURI;
 const pool = new pg.Pool({
   connectionString: connstring,
@@ -18,10 +18,10 @@ dbMethods.getAllBlogPosts = function () {
 };
 
 // ------------------------------------
-dbMethods.createBlogPost = function (heading, blogtext, userid) {
+dbMethods.createBlogPost = function (heading, itemtext, userid) {
   let sql =
-    'INSERT INTO todoposts (id, date, heading, blogtext, userid) VALUES(DEFAULT, DEFAULT, $1, $2, $3) returning *';
-  let values = [heading, blogtext, userid];
+    'INSERT INTO todoposts (id, date, heading, itemtext, userid) VALUES(DEFAULT, DEFAULT, $1, $2, $3) returning *';
+  let values = [heading, itemtext, userid];
   return pool.query(sql, values); //return the promise
 };
 

@@ -45,6 +45,27 @@
         let button = document.getElementById('forgotPwd')
 
 
+
+        // Put all og this in eventlistrner on button
+        function createCredentialString(username, password) {
+            let combinedStr = username + ":" + password;
+            let b64Str = btoa(combinedStr);
+
+            return "basic " + b64Str;
+        }
+
+        //calling function
+        let cred = createCredentialString("camilla", "alexander");
+        console.log();
+
+        let cfg = {
+            method: "POST",
+            headers: {
+                "authorization": createCredentialString("camilla", "alexander")
+            }
+        }
+
+
         // ----------------------------------------
 
     </script>
