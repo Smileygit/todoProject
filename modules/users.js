@@ -3,6 +3,7 @@ const db = require('./db.js');
 const authUtils = require('./auth_utils.js');
 const { verifyPassword } = require('./auth_utils.js');
 const dbMethods = require('./db.js');
+const protect = require('./auth.js');
 const router = express.Router();
 
 //endpoints------------------------------
@@ -18,19 +19,22 @@ router.post('/todousers/login', async function (req, res, next) {
     return;
   }
   let hash = authUtils.createHash(cred.password);
+  //   console.log(hash);
 
   try {
     let data = await db.getUser(cred.username);
-    let userid = data.rows[0].id;
-    let userPassword = data.rows[0].password;
+    let user = data.rows[0];
+    let userid = user.id;
 
-    let tok = authUtils.createToken(username, userid);
+    let tok = authUtils.createToken(cred.username, userid);
 
     let verify = authUtils.verifyPassword(
-      hash,
-      userPassword.hash,
-      userPassword.salt
+      cred.password,
+      user.password,
+      user.salt
     );
+
+    console.log(verify);
 
     if (data.rows.length > 0 && verify === true) {
       res
@@ -47,7 +51,7 @@ router.post('/todousers/login', async function (req, res, next) {
 });
 
 //list allusers-------------------------
-router.get('/todousers', async function (req, res, next) {
+router.get('/todousers', protect, async function (req, res, next) {
   res.status(200).send('Hello from GET - /todousers').end();
 });
 

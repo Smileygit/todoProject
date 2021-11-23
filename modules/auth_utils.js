@@ -1,7 +1,7 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 //the secret must be stored in an env. variable in the finished app
-const secret = 'dronningmaudsland';
+const secret = "dronningmaudsland";
 
 let utils = {};
 
@@ -9,16 +9,16 @@ let utils = {};
 utils.decodeCred = function (credString) {
   let cred = {};
   //remove the word "basic"
-  let b64String = credString.replace('basic', '');
+  let b64String = credString.replace("basic", "");
 
   //convert to ascii text (clear text)
-  let asciiString = Buffer.from(b64String, 'base64').toString('ascii'); //"weisong: kongo"
+  let asciiString = Buffer.from(b64String, "base64").toString("ascii"); //"weisong: kongo"
 
   //extract the username - using regex
-  cred.username = asciiString.replace(/:.*/, ''); //weisong
+  cred.username = asciiString.replace(/:.*/, ""); //weisong
 
   //extract the password
-  cred.password = asciiString.replace(cred.username + ':', ''); //kongo
+  cred.password = asciiString.replace(cred.username + ":", ""); //kongo
 
   return cred;
 };
@@ -27,7 +27,7 @@ utils.decodeCred = function (credString) {
 utils.createHash = function (password) {
   let hash = {};
   hash.salt = Math.random().toString();
-  hash.value = crypto.scryptSync(password, hash.salt, 64).toString('hex');
+  hash.value = crypto.scryptSync(password, hash.salt, 64).toString("hex");
 
   return hash;
 };
@@ -35,7 +35,7 @@ utils.createHash = function (password) {
 //------------------------------------
 utils.createToken = function (username, userID) {
   //part1 and 2 as JSON-text
-  let part1 = JSON.stringify({ alg: 'HS256', typ: 'JWT' });
+  let part1 = JSON.stringify({ alg: "HS256", typ: "JWT" });
   let part2 = JSON.stringify({
     user: username,
     userid: userID,
@@ -43,40 +43,40 @@ utils.createToken = function (username, userID) {
   });
 
   //part 1 and 2 as base64
-  let b64Part1 = Buffer.from(part1).toString('base64');
-  let b64Part2 = Buffer.from(part2).toString('base64');
+  let b64Part1 = Buffer.from(part1).toString("base64");
+  let b64Part2 = Buffer.from(part2).toString("base64");
 
   //combine part 1 and 2 separated with . (period)
-  let openPart = b64Part1 + '.' + b64Part2;
+  let openPart = b64Part1 + "." + b64Part2;
 
   //creat the 3.part (signature) using a hash-function in the crypto-module
-  let secret = 'dronningmaudsland';
+  let secret = "dronningmaudsland";
   let sign = crypto
-    .createHmac('SHA256', secret)
+    .createHmac("SHA256", secret)
     .update(openPart)
-    .digest('base64');
+    .digest("base64");
 
-  return openPart + '.' + sign;
+  return openPart + "." + sign;
 };
 
 //------------------------------------
 utils.verifyToken = function (token) {
   //using the string-method split to extract the three parts into an array
-  let tokenArr = token.split('.');
-  let openPart = tokenArr[0] + '.' + tokenArr[1];
+  let tokenArr = token.split(".");
+  let openPart = tokenArr[0] + "." + tokenArr[1];
   let signToCheck = tokenArr[2];
 
-  let secret = 'dronningmaudsland';
+  let secret = "dronningmaudsland";
   let sign = crypto
-    .createHmac('SHA256', secret)
+    .createHmac("SHA256", secret)
     .update(openPart)
-    .digest('base64');
+    .digest("base64");
 
   if (signToCheck != sign) {
     return false;
   }
 
-  let payloadTxt = Buffer.from(tokenArr[1], 'base64').toString('ascii');
+  let payloadTxt = Buffer.from(tokenArr[1], "base64").toString("ascii");
   let payload = JSON.parse(payloadTxt);
 
   let expireTime = payload.iat + 24 * 60 * 60 * 1000; //time in millisec
@@ -86,10 +86,9 @@ utils.verifyToken = function (token) {
   //the token ok
   return payload;
 };
-//--------------------
-utils.verifyPassword = function (pswFromUser, hashFromDB, saltFromDB) {
-  hash = crypto.scryptSync(pswFromUser, saltFromDB, 64).toString('hex');
 
+utils.verifyPassword = function (pswFromUser, hashFromDB, saltFromDB) {
+  let hash = crypto.scryptSync(pswFromUser, saltFromDB, 64).toString("hex");
   if (hash == hashFromDB) {
     return true;
   }
