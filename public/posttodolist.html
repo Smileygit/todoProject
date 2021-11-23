@@ -36,11 +36,16 @@
 
                 container.innerHTML = ""; //delete previous content
                 
+               
+                let currentUser = token.userid;
+                console.log(currentUser);
+
                 for (let value of data) {
 
                     let date = new Date(value.date);
 
                     let html = "<h2>" + value.heading + "</h2>";
+                    //html = "<p>" + token.username + "</p>";
                     html += "<p>" + date.toLocaleDateString() + "</p>";
                     html += "<p>" + value.blogtext + "</p><hr>";
 
