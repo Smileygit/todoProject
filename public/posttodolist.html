@@ -35,17 +35,15 @@
                 }
 
                 container.innerHTML = ""; //delete previous content
-                
-               
-                let currentUser = token.userid;
-                console.log(currentUser);
-
+        
+                console.log(data);
                 for (let value of data) {
-
+            
                     let date = new Date(value.date);
 
                     let html = "<h2>" + value.heading + "</h2>";
-                    //html = "<p>" + token.username + "</p>";
+                    //need to add currentuser to this HTML
+                    //html += "<p>" +  + "</p>";
                     html += "<p>" + date.toLocaleDateString() + "</p>";
                     html += "<p>" + value.blogtext + "</p><hr>";
 

@@ -5,9 +5,6 @@ const protect = require('./auth');
 
 // endpoints ----------------------------
 router.get('/todoposts', protect, async function (req, res, next) {
-  console.log(res.locals.username);
-  console.log(res.locals.userid);
-
   try {
     let data = await db.getAllBlogPosts();
     res.status(200).json(data.rows).end();
@@ -18,6 +15,8 @@ router.get('/todoposts', protect, async function (req, res, next) {
 });
 
 router.post('/todoposts', protect, async function (req, res, next) {
+  console.log(res.locals.username);
+  console.log(res.locals.userid);
   let updata = req.body;
   let userid = res.locals.userid;
 
