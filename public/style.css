@@ -2,6 +2,8 @@
 body {
   background-color: rgb(100, 155, 237);
   height: 100%;
+
+
 }
 
 #title { 
@@ -11,7 +13,9 @@ body {
 
 
 #button1, #button2{
+
   padding: 15px 15px;
+
   font-size: 16px;
   cursor: pointer;
   text-align: center;
@@ -31,6 +35,7 @@ body {
 }
 
 .create, .view {
+
   display: inline-block;
 }
 
