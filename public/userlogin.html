@@ -42,6 +42,8 @@
                 
                 txtResult.innerHTML = data.msg;
                 localStorage.setItem("token", data.token);
+
+                location.href = "editpage.html";
             }
             catch(error) {
                 console.log(error);
