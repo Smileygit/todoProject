@@ -10,45 +10,85 @@
 
     <!----------- HTML-elements -------------->
     
-    <div class="container">
-        <h1 id = "title">To do List</h1>
-        <div>
-            <div class="create">
-                <form action="create.html">
-                    <button id = "button1" type="submit">Edit List</button>
-                </form>
-            </div>
-            <div class="view">
-                <form action="posttodolist.html">
-                    <button id = "button2" type="submit">View Lists</button>
-                </form>
-            </div>
-            <div class="createuser">
-                <form action="createuser.html">
-                    <button id = "button3" type="submit">Register</button>
-                </form>
-            </div>
-            <div class="userlogin">
-                <form action="userlogin.html">
-                    <button id = "button4" type="submit">Log-In</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <div class="application">
     
+        <div class="header">
+            <h1>My TO-DO list</h1><br>
+        </div>
+    
+        <div class="addItemBox">
 
+            <input id="inpUsername" type="text" placeholder="Username" />
+            <input id="inpPassword" type="text" placeholder="Password" /><br><br>
+            
+            
+         
+            <button id="btnLogin">Login</button><br>
+          
+
+            <div class="userRegistration">
+                <form action="createuser.html">
+            <button id="btnCreate">Register</button>
+            </form>
+            </div>
+
+            <h3 id="txtResult"></h3>
+    
+        </div>
+        <div class="listBox">
+            <div id="container"></div>
+        </div>
+    
+    </div>
     
         
     <!------------- JavaScript --------------->
     <script>
+    let inpUsername = document.getElementById('inpUsername');
+        let inpPassword = document.getElementById('inpPassword');
+        let btnLogin = document.getElementById('btnLogin');
+        let txtResult = document.getElementById('txtResult');
+
+        btnLogin.addEventListener('click', async function (evt) {
+
+            let url = "/todousers/login";
+            let credString = createCredentialString(inpUsername.value, inpPassword.value);
+
+            let cfg = {
+                method: "POST",
+                headers: { "authorization": credString }
+            }
+
+            try {
+                let response = await fetch(url, cfg);
+                let data = await response.json();
+
+                if (response.status != 200) {
+                    throw data.error;
+                }
+
+                txtResult.innerHTML = data.msg;
+                localStorage.setItem("token", data.token);
+                document.location.href = "posts.html";
+                //move to new html file
+                
+            }
+            catch (error) {
+                console.log(error);
+                txtResult.innerHTML = "Something went wrong - check the console window";
+            }
+        });
+
+
+        //-----------------------------------
+        function createCredentialString(username, password) {
+            let combinedStr = username + ":" + password;
+            let b64Str = btoa(combinedStr);
+            return "basic " + b64Str;
+        }
 
         
     </script>
-
-    <!---------------- CSS ------------------->
-    <style> 
-    
-    </style>
     
 
 </body>

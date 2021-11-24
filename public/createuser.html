@@ -2,66 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="style.css">   
     <title>TestClient</title>
 </head>
 <body>
 
-    <!----------- HTML-elements -------------->   
-    <h1>Create new user</h1> 
-    <input id="inpUsername" type="text" placeholder="User name" />
-    <input id="inpPassword" type="text" placeholder="inpPassword" /><br><br>
-    <button id="btnCreate">Create User</button><br>
-    <h3 id="txtResult">Result...</h3>
+    <!----------- HTML-elements -------------->
+    
+    <div class="application">
+    
+        <div class="header">
+            <h1>My TO-DO list</h1><br>
+        </div>
+    
+        <div class="addItemBox">
+            <p>Create new user</p>
+            <input id="inpUsername" type="text" placeholder="User name"/><br>
+            <input id="inpPassword" type="text" placeholder="Password"/><br>
+            <br>
+            <button id="btnCreate">Create User</button>
+
+        <div class="toLogin">
+            <form action="index.html">
+                <button id="btnCreate">Log in</button>
+            </form>
+        </div>
+
+
+            <h3 id="txtResult">Result...</h3>
+        </div>
+        <div class="listBox">
+            <div id="container"></div>
+        </div>
+    
+    </div>
         
     <!------------- JavaScript --------------->
     <script>
-        
-        let inpUsername = document.getElementById('inpUsername');
-        let inpPassword = document.getElementById('inpPassword');
-        let btnCreate = document.getElementById('btnCreate');
-        let txtResult = document.getElementById('txtResult');
+    
+             let inpUsername = document.getElementById('inpUsername');
+                let inpPassword = document.getElementById('inpPassword');
+                let btnCreate = document.getElementById('btnCreate');
+                let txtResult = document.getElementById('txtResult');
 
-        btnCreate.addEventListener('click', async function(evt) {
-            
-            let url = "/todousers";
-            let credString = createCredentialString(inpUsername.value, inpPassword.value);
+                btnCreate.addEventListener('click', async function (evt) {
 
-            let cfg = {
-                method: "POST",
-                headers: {"authorization": credString}
-            }           
+                    let url = "/todousers";
+                    let credString = createCredentialString(inpUsername.value, inpPassword.value);
 
-            try {                
-                let response = await fetch(url, cfg);               
-                let data = await response.json();
-                
-                if (response.status != 200) {
-                    throw data.error;
+                    let cfg = {
+                        method: "POST",
+                        headers: { "authorization": credString }
+                    }
+
+                    try {
+                        let response = await fetch(url, cfg);
+                        let data = await response.json();
+
+                        if (response.status != 200) {
+                            throw data.error;
+                        }
+
+                        txtResult.innerHTML = data.msg;
+                    }
+                    catch (error) {
+                        console.log(error);
+                        txtResult.innerHTML = "Something went wrong - check the console window";
+                    }
+                });
+
+
+                //-----------------------------------
+                function createCredentialString(username, password) {
+                    let combinedStr = username + ":" + password;
+                    let b64Str = btoa(combinedStr);
+                    return "basic " + b64Str;
                 }
-                
-                txtResult.innerHTML = data.msg;
-            }
-            catch(error) {
-                console.log(error);
-                txtResult.innerHTML = "Something went wrong - check the console window";
-            }            
-        });     
-        
-        
-        //-----------------------------------
-        function createCredentialString(username, password){
-              let combinedStr = username + ":" + password;
-              let b64Str = btoa(combinedStr);
-              return "basic " + b64Str;
-        }
 
     </script>
-
-    <!---------------- CSS ------------------->
-    <style> 
-
-    </style>
+    
 
 </body>
 
