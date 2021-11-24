@@ -31,7 +31,7 @@ body {
   justify-items: center;
 }
 
-.create, .view {
+.create, .view, .createuser, .userlogin {
   display: inline-block;
 }
 
