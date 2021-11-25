@@ -1,11 +1,14 @@
 const express = require('express');
 const db = require('./db.js');
 const router = express.Router();
+const protect = require('./auth.js')
 
 // endpoints ----------------------------
-router.get('/todoposts', async function (req, res, next) {
+router.get('/todoposts', protect, async function (req, res, next) {
+
+  let userid = res.locals.userid;
   try {
-    let data = await db.getAllBlogPosts();
+    let data = await db.getAllBlogPosts(userid);
     res.status(200).json(data.rows).end();
   } catch (err) {
     console.log(err);
@@ -13,9 +16,9 @@ router.get('/todoposts', async function (req, res, next) {
   }
 });
 
-router.post('/todoposts', async function (req, res, next) {
+router.post('/todoposts', protect, async function (req, res, next) {
   let updata = req.body;
-  let userid = 1; //must be changed when we implement users
+  let userid = res.locals.userid; 
 
   try {
     let data = await db.createBlogPost(updata.heading, updata.blogtext, userid);
@@ -23,29 +26,30 @@ router.post('/todoposts', async function (req, res, next) {
     if (data.rows.length > 0) {
       res
         .status(200)
-        .json({ msg: 'The blogpost was created succefully' })
+        .json({ msg: 'The post was created succefully' })
         .end();
     } else {
-      throw "The blogpost couldn't be created";
+      throw "The post couldn't be created";
     }
   } catch (err) {
     next(err);
   }
 });
 
-router.delete('/todoposts', async function (req, res, next) {
+router.delete('/todoposts', protect, async function (req, res, next) {
   let updata = req.body;
+  let userid = res.locals.userid;
 
   try {
-    let data = await db.deleteBlogPost(updata.id);
+    let data = await db.deleteBlogPost(updata.id, userid);
 
     if (data.rows.length > 0) {
       res
         .status(200)
-        .json({ msg: 'The blogpost was deleted succefully' })
+        .json({ msg: 'The post was deleted succefully' })
         .end();
     } else {
-      throw "The blogpost couldn't be deleted";
+      throw "The post couldn't be deleted";
     }
   } catch (err) {
     next(err);
