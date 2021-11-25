@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./db.js');
 const router = express.Router();
-const protect = require('./auth.js')
+const protect = require('./auth.js');
 
 // endpoints ----------------------------
 router.get('/todoposts', protect, async function (req, res, next) {

@@ -3,6 +3,7 @@ const db = require("./db.js");
 const authUtils = require("./auth_utils.js");
 const { verifyPassword } = require("./auth_utils.js");
 const dbMethods = require("./db.js");
+const protect = require('./auth.js');
 const router = express.Router();
 
 //endpoints------------------------------
