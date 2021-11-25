@@ -48,7 +48,7 @@ body {
   overflow-y: scroll;
 }
 
-.listBox:hover {
+.listBox>div:hover {
   color: #fff;
 }
 
