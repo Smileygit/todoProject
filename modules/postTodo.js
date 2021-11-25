@@ -1,13 +1,11 @@
 const express = require('express');
 const db = require('./db.js');
 const router = express.Router();
-const protect = require('./auth');
 
 // endpoints ----------------------------
-router.get('/todoposts', protect, async function (req, res, next) {
-  let userid = res.locals.userid;
+router.get('/todoposts', async function (req, res, next) {
   try {
-    let data = await db.getAllBlogPosts(userid);
+    let data = await db.getAllBlogPosts();
     res.status(200).json(data.rows).end();
   } catch (err) {
     console.log(err);
@@ -15,11 +13,9 @@ router.get('/todoposts', protect, async function (req, res, next) {
   }
 });
 
-router.post('/todoposts', protect, async function (req, res, next) {
-  console.log(res.locals.username);
-  console.log(res.locals.userid);
+router.post('/todoposts', async function (req, res, next) {
   let updata = req.body;
-  let userid = res.locals.userid;
+  let userid = 1; //must be changed when we implement users
 
   try {
     let data = await db.createBlogPost(updata.heading, updata.blogtext, userid);
@@ -37,12 +33,11 @@ router.post('/todoposts', protect, async function (req, res, next) {
   }
 });
 
-router.delete('/todoposts', protect, async function (req, res, next) {
+router.delete('/todoposts', async function (req, res, next) {
   let updata = req.body;
-  let userid = res.locals.userid;
 
   try {
-    let data = await db.deleteBlogPost(updata.id, userid);
+    let data = await db.deleteBlogPost(updata.id);
 
     if (data.rows.length > 0) {
       res
