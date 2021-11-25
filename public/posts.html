@@ -22,6 +22,8 @@
             <textarea id="inpBlogtext" cols="20" rows="3"></textarea><br>
             <button id="btnCreate">Add item</button><br>
             <h3 id="txtResult"></h3>
+
+            
     
         </div>
         <div class="listBox">
@@ -107,7 +109,7 @@
 
                         let html = "<h2>" + value.heading + "</h2>";
                         //need to add currentuser to this HTML
-                        //html += "<p>" +  + "</p>";
+                        html += "<p>" +  + "</p>";
                         html += "<p>" + date.toLocaleDateString() + "</p>";
                         html += "<p>" + value.blogtext + "</p><hr>";
 

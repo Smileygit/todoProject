@@ -5,8 +5,9 @@ const protect = require('./auth');
 
 // endpoints ----------------------------
 router.get('/todoposts', protect, async function (req, res, next) {
+  let userid = res.locals.userid;
   try {
-    let data = await db.getAllBlogPosts();
+    let data = await db.getAllBlogPosts(userid);
     res.status(200).json(data.rows).end();
   } catch (err) {
     console.log(err);

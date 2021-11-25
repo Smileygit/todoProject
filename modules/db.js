@@ -12,9 +12,11 @@ const pool = new pg.Pool({
 let dbMethods = {}; //create empty object
 
 // ------------------------------------
-dbMethods.getAllBlogPosts = function () {
-  let sql = 'SELECT * FROM todoposts';
-  return pool.query(sql); //return the promise
+dbMethods.getAllBlogPosts = function (userid) {
+  //let sql = 'SELECT * FROM todoposts';
+  let sql = 'SELECT * FROM todoposts WHERE userid=$1';
+  let values = [userid];
+  return pool.query(sql, values); //return the promise
 };
 
 // ------------------------------------
