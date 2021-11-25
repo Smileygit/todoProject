@@ -29,10 +29,12 @@
                 heading: inpHeading.value,
                 blogtext: inpBlogtext.value
             }
+            let token = localStorage.getItem("token");
 
             let cfg = {
                 method: "POST",
-                headers: {"content-type":"application/json"},
+                headers: {"content-type":"application/json",
+                            "authorization": token},
                 body: JSON.stringify(updata)
             }           
 
@@ -43,7 +45,8 @@
                 if (response.status != 200) {
                     throw data.error;
                 }
-                
+
+                listBlogPosts();
                 txtResult.innerHTML = data.msg;
             }
             catch(error) {

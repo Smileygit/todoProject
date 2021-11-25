@@ -18,10 +18,16 @@
         //-----------------------------------------------
         async function listBlogPosts() {
 
-            let url = "/todoposts";            
+            let url = "/todoposts"; 
+            let token = localStorage.getItem("token");
+            
+            let cfg = {
+                method: "GET",
+                headers: { "authorization": token }
+            };
 
             try {
-                let response = await fetch(url);
+                let response = await fetch(url, cfg);
                 let data = await response.json();
                 
                 if (response.status != 200) {
@@ -35,6 +41,8 @@
                     let date = new Date(value.date);
 
                     let html = "<h2>" + value.heading + "</h2>";
+
+                    html += "<p>"+"<p>"
                     html += "<p>" + date.toLocaleDateString() + "</p>";
                     html += "<p>" + value.blogtext + "</p><hr>";
 
