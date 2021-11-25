@@ -12,8 +12,10 @@ const pool = new pg.Pool({
 let dbMethods = {}; //create empty object
 
 // ------------------------------------
-dbMethods.getAllBlogPosts = function() {
-    let sql = "SELECT * FROM todoposts";	
+dbMethods.getAllBlogPosts = function(userid) {
+    //let sql = "SELECT * FROM todoposts";	
+    let sql = "SELECT * FROM todoposts WHERE userid = $1";
+    let values = [userid];
 	return pool.query(sql); //return the promise	
 }
 
@@ -25,9 +27,9 @@ dbMethods.createBlogPost = function(heading, blogtext, userid) {
 }
 
 // ------------------------------------
-dbMethods.deleteBlogPost = function(id) {  
-    let sql = "DELETE FROM todoposts WHERE id = $1 RETURNING *";
-	let values = [id];	
+dbMethods.deleteBlogPost = function(id, userid) {  
+    let sql = "DELETE FROM todoposts WHERE id = $1 AND userid = $2 RETURNING *";
+	let values = [id, userid];	
     return pool.query(sql, values); //return the promise
 }
 
