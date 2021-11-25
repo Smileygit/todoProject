@@ -21,6 +21,7 @@
             <textarea id="inpHeading" cols="20" rows="1"></textarea><br>
             <textarea id="inpBlogtext" cols="20" rows="3"></textarea><br>
             <button id="btnCreate">Add item</button><br>
+            <button id="btnLogout">Log Out</button>
             <h3 id="txtResult"></h3>
 
             
@@ -40,6 +41,12 @@
             let btnCreate = document.getElementById('btnCreate');
             let txtResult = document.getElementById('txtResult');
             let container = document.getElementById('container');
+
+            let btnLogout = document.getElementById("btnLogout");
+
+            btnLogout.addEventListener("click", async function(evt){
+                location.href = "index.html";
+            })
 
             btnCreate.addEventListener('click', async function (evt) {
 
