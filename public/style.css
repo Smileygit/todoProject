@@ -41,11 +41,15 @@ body {
 
 .listBox {
   grid-area: listBox;
-  background: #fff;
+  background: rgb(252, 199, 199);
   box-shadow: 0px 40px 15px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   text-align: center;
   overflow-y: scroll;
+}
+
+.listBox:hover {
+  color: #fff;
 }
 
 .addItemBox {
