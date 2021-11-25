@@ -1,13 +1,13 @@
 const express = require("express");
 const db = require("./db.js");
 const router = express.Router();
-
 const protect = require("./auth");
 
 // endpoints ----------------------------
 router.get("/todoposts", protect, async function (req, res, next) {
+  let userid = res.locals.userid;
   try {
-    let data = await db.getAllBlogPosts();
+    let data = await db.getAllBlogPosts(userid);
     res.status(200).json(data.rows).end();
   } catch (err) {
     console.log(err);
@@ -25,10 +25,7 @@ router.post("/todoposts", protect, async function (req, res, next) {
     let data = await db.createBlogPost(updata.heading, updata.blogtext, userid);
 
     if (data.rows.length > 0) {
-      res
-        .status(200)
-        .json({ msg: "The blogpost was created succefully" })
-        .end();
+      res.status(200).json({ msg: "" }).end();
     } else {
       throw "The blogpost couldn't be created";
     }
@@ -45,10 +42,7 @@ router.delete("/todoposts", protect, async function (req, res, next) {
     let data = await db.deleteBlogPost(updata.id, userid);
 
     if (data.rows.length > 0) {
-      res
-        .status(200)
-        .json({ msg: "The blogpost was deleted succefully" })
-        .end();
+      res.status(200).json({ msg: "" }).end();
     } else {
       throw "The blogpost couldn't be deleted";
     }

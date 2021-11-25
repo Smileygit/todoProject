@@ -9,26 +9,82 @@
   <body>
     <!----------- HTML-elements -------------->
 
-    <div class="container">
-      <h1 id="title">To do List</h1>
-      <div>
-        <div class="createuser">
+    <div class="application">
+      <div class="header">
+        <h1>My TO-DO list</h1>
+        <br />
+      </div>
+
+      <div class="addItemBox">
+        <input id="inpUsername" type="text" placeholder="Username" />
+        <input
+          id="inpPassword"
+          type="password"
+          placeholder="Password"
+        /><br /><br />
+
+        <button id="btnLogin">Login</button><br />
+
+        <div class="userRegistration">
           <form action="createuser.html">
-            <button id="button1" type="submit">Register</button>
+            <button id="btnCreate">Register</button>
           </form>
         </div>
-        <div class="userlogin">
-          <form action="userlogin.html">
-            <button id="button2" type="submit">Log-In</button>
-          </form>
+
+        <h3 id="txtResult"></h3>
+      </div>
+      <div class="listBox">
+        <div id="container">
+          <h2 id="text1">Please log in to edit your items.</h2>
+          <p id="text2">Don`t have account yet? You can create one</p>
         </div>
       </div>
     </div>
+
     <!------------- JavaScript --------------->
+    <script>
+      let inpUsername = document.getElementById("inpUsername");
+      let inpPassword = document.getElementById("inpPassword");
+      let btnLogin = document.getElementById("btnLogin");
+      let txtResult = document.getElementById("txtResult");
 
-    <script></script>
+      btnLogin.addEventListener("click", async function (evt) {
+        let url = "/todousers/login";
+        let credString = createCredentialString(
+          inpUsername.value,
+          inpPassword.value
+        );
 
-    <!---------------- CSS ------------------->
-    <style></style>
+        let cfg = {
+          method: "POST",
+          headers: { authorization: credString },
+        };
+
+        try {
+          let response = await fetch(url, cfg);
+          let data = await response.json();
+
+          if (response.status != 200) {
+            throw data.error;
+          }
+
+          txtResult.innerHTML = data.msg;
+          localStorage.setItem("token", data.token);
+          document.location.href = "posts.html";
+          //move to new html file
+        } catch (error) {
+          console.log(error);
+          txtResult.innerHTML =
+            "Something went wrong - check the console window";
+        }
+      });
+
+      //-----------------------------------
+      function createCredentialString(username, password) {
+        let combinedStr = username + ":" + password;
+        let b64Str = btoa(combinedStr);
+        return "basic " + b64Str;
+      }
+    </script>
   </body>
 </html>

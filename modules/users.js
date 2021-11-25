@@ -4,11 +4,19 @@ const authUtils = require("./auth_utils.js");
 const { verifyPassword } = require("./auth_utils.js");
 const dbMethods = require("./db.js");
 const protect = require("./auth.js");
-
 const router = express.Router();
 
 //endpoints------------------------------
-
+router.get("/userid", protect, async function (req, res, next) {
+  let userid = res.locals.userid;
+  try {
+    let data = await db.getUserId(userid);
+    res.status(200).json(data.rows[0]).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
 //user login-----------------------------
 router.post("/todousers/login", async function (req, res, next) {
   let credString = req.headers.authorization;
@@ -17,7 +25,6 @@ router.post("/todousers/login", async function (req, res, next) {
 
   if (cred.username == "" || cred.password == "") {
     res.status(401).json({ error: "No username or password" }).end();
-
     return;
   }
   let hash = authUtils.createHash(cred.password);
@@ -41,7 +48,6 @@ router.post("/todousers/login", async function (req, res, next) {
     if (data.rows.length > 0 && verify === true) {
       res
         .status(200)
-
         .json({ msg: "The login was succefully", token: tok })
         .end();
     } else {
@@ -65,7 +71,6 @@ router.post("/todousers", async function (req, res, next) {
 
   if (cred.username == "" || cred.password == "") {
     res.status(401).json({ error: "No username or password" }).end();
-
     return;
   }
   let hash = authUtils.createHash(cred.password);
