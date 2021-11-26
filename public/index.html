@@ -50,7 +50,7 @@
 
       btnLogin.addEventListener("click", async function (evt) {
         let url = "/todousers/login";
-        let credString = createCredentialString(
+        let credString = createAuthenticationString(
           inpUsername.value,
           inpPassword.value
         );
@@ -65,22 +65,28 @@
           let data = await response.json();
 
           if (response.status != 200) {
+            if(response.status === 401){
+              txtResult.innerHTML = data.error;
+              return;
+            }else if(response.status === 403){
+              txtResult.innerHTML = data.error;
+              return;
+            }
+            txtResult.innerHTML = data.error;
             throw data.error;
           }
 
-          txtResult.innerHTML = data.msg;
+          //txtResult.innerHTML = data.msg;
           localStorage.setItem("token", data.token);
           document.location.href = "posts.html";
-          //move to new html file
+
         } catch (error) {
           console.log(error);
-          txtResult.innerHTML =
-            "Something went wrong - check the console window";
         }
       });
 
       //-----------------------------------
-      function createCredentialString(username, password) {
+      function createAuthenticationString(username, password) {
         let combinedStr = username + ":" + password;
         let b64Str = btoa(combinedStr);
         return "basic " + b64Str;
