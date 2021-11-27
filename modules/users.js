@@ -54,9 +54,10 @@ router.post('/todousers/login', async function (req, res, next) {
     } else {
       if (verify === false) {
         res.status(403).json({ error: 'Password is wrong, try again' }).end();
+      } else {
+        throw 'The user doesn`t exist';
+        return;
       }
-      throw 'The user doesn`t exist';
-      return;
     }
   } catch (err) {
     json({ error: err });
