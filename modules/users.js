@@ -22,12 +22,26 @@ router.get('/userid', protect, async function (req, res, next) {
 router.post('/todousers/login', async function (req, res, next) {
   let credString = req.headers.authorization;
   let cred = authUtils.decodeCred(credString);
+  let nameExist;
+  let allUsers = await db.getUsers();
+
+  function checkUnique(inpUser) {
+    for (let i = 0; i < allUsers.rows.length; i++) {
+      if (allUsers.rows[i]['username'] === inpUser) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   if (cred.username == '' || cred.password == '') {
     res
       .status(401)
       .json({ error: 'You must insert both username and password' })
       .end();
+    return;
+  } else if (checkUnique(cred.username) === false) {
+    res.status(404).json({ error: 'Username does not exist' }).end();
     return;
   }
   let hash = authUtils.createHash(cred.password);
@@ -74,17 +88,12 @@ router.get('/todousers', protect, async function (req, res, next) {
 router.post('/todousers', async function (req, res, next) {
   let credString = req.headers.authorization;
   let cred = authUtils.decodeCred(credString);
-
-  let inpUserName = cred.username;
-
   let allUsers = await db.getUsers();
-  //console.log(allUsers.rows.length);
 
-  let userCheck = checkUnique(cred.username);
+  let userCheck = check.checkUnique(cred.username);
 
   function checkUnique(inpUser) {
     for (let i = 0; i < allUsers.rows.length; i++) {
-      //console.log(allUsers.rows[i]['username']);
       if (allUsers.rows[i]['username'] === inpUser) {
         console.log('finnes');
         return false;
