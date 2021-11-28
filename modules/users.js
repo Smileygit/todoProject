@@ -75,18 +75,49 @@ router.post('/todousers', async function (req, res, next) {
   let credString = req.headers.authorization;
   let cred = authUtils.decodeCred(credString);
 
+  let inpUserName = cred.username;
+
+  let allUsers = await db.getUsers();
+  //console.log(allUsers.rows.length);
+
+  let userCheck = checkUnique(cred.username);
+
+  function checkUnique(inpUser) {
+    for (let i = 0; i < allUsers.rows.length; i++) {
+      //console.log(allUsers.rows[i]['username']);
+      if (allUsers.rows[i]['username'] === inpUser) {
+        console.log('finnes');
+        return false;
+      }
+    }
+    return true;
+  }
+
   if (cred.username == '' || cred.password == '') {
-    res.status(401).json({ error: 'No username or password' }).end();
+    res
+      .status(401)
+      .json({
+        error: 'You must choose a username and password for your user',
+      })
+      .end();
+    return;
+  } else if (!userCheck) {
+    res
+      .status(403)
+      .json({
+        error:
+          'The username you picked is already in use. Please pick a new one',
+      })
+      .end();
     return;
   }
   let hash = authUtils.createHash(cred.password);
 
   try {
     let data = await db.createUser(cred.username, hash.value, hash.salt);
-
     if (data.rows.length > 0) {
-      console.log(cred.username);
       res.status(200).json({ msg: 'The user was created succefully' }).end();
+      return;
     } else {
       throw 'the user coldn`t be created';
     }

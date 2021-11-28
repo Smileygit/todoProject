@@ -65,16 +65,13 @@
           let data = await response.json();
 
           if (response.status != 200) {
-            txtResult.innerHTML = data.error;
             throw data.error;
           }
-
-          //txtResult.innerHTML = data.msg;
           localStorage.setItem("token", data.token);
           document.location.href = "posts.html";
 
         } catch (error) {
-          console.log(error);
+          txtResult.innerHTML = error;
         }
       });
 
