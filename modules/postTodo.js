@@ -15,6 +15,7 @@ router.get('/todoposts', protect, async function (req, res, next) {
   }
 });
 
+// ------- Create post
 router.post('/todoposts', protect, async function (req, res, next) {
   let updata = req.body;
   let userid = res.locals.userid;
@@ -32,6 +33,7 @@ router.post('/todoposts', protect, async function (req, res, next) {
   }
 });
 
+// ----- delete post
 router.delete('/todoposts', protect, async function (req, res, next) {
   let updata = req.body;
   let userid = res.locals.userid;

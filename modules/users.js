@@ -14,15 +14,14 @@ router.get('/userid', protect, async function (req, res, next) {
     let data = await db.getUserId(userid);
     res.status(200).json(data.rows[0]).end();
   } catch (err) {
-    console.log(err);
     next(err);
   }
 });
+
 //user login-----------------------------
 router.post('/todousers/login', async function (req, res, next) {
   let credString = req.headers.authorization;
   let cred = authUtils.decodeCred(credString);
-  let nameExist;
   let allUsers = await db.getUsers();
 
   function checkUnique(inpUser) {
@@ -44,7 +43,6 @@ router.post('/todousers/login', async function (req, res, next) {
     res.status(404).json({ error: 'Username does not exist' }).end();
     return;
   }
-  let hash = authUtils.createHash(cred.password);
 
   try {
     let data = await db.getUser(cred.username);
@@ -96,7 +94,6 @@ router.post('/todousers', async function (req, res, next) {
   let cred = authUtils.decodeCred(credString);
 
   let allUsers = await db.getUsers();
-
   let userCheck = checkUnique(cred.username);
 
   function checkUnique(inpUser) {
