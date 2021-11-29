@@ -7,8 +7,6 @@
     <title>TestClient</title>
   </head>
   <body>
-    <!----------- HTML-elements -------------->
-
     <div class="application">
       <div class="header">
         <h1>My TO-DO list</h1>
@@ -25,101 +23,88 @@
       </div>
     </div>
 
-    <!------------- JavaScript --------------->
     <script>
+      let txtResult = document.getElementById('txtResult');
+      let container = document.getElementById('container');
+      let usernameTxt = document.getElementById('usernameTxt');
+      let btnToPosts = document.getElementById('btnToPosts');
+      let btnLogout = document.getElementById('btnLogout');
 
-      let txtResult = document.getElementById("txtResult");
-      let container = document.getElementById("container");
-      let usernameTxt = document.getElementById("usernameTxt")
-      let btnToPosts = document.getElementById("btnToPosts");
-      let btnLogout = document.getElementById("btnLogout");
+      btnLogout.addEventListener('click', async function (evt) {
+        location.href = 'index.html';
+      });
 
-        btnLogout.addEventListener("click", async function (evt) {
-          location.href = "index.html";
-        });
+      btnToPosts.addEventListener('click', async function (evt) {
+        location.href = 'posts.html';
+      });
 
-        btnToPosts.addEventListener("click", async function (evt) {
-          location.href = "posts.html";
-        });
+      async function listUsers() {
+        let url = '/todousers';
+        let token = localStorage.getItem('token');
 
-        async function listUsers() {
-            let url = "/todousers";
-            let token = localStorage.getItem("token");
+        let cfg = {
+          method: 'GET',
+          headers: { authorization: token },
+        };
 
-            let cfg = {
-              method: "GET",
-              headers: { authorization: token }
-            };
+        try {
+          let response = await fetch(url, cfg);
+          let data = await response.json();
 
-            try {
-              let response = await fetch(url, cfg);
-              let data = await response.json();
-
-              if (response.status != 200) {
-                throw data.error;
-              }
-
-              container.innerHTML = ""; //delete previous content
-
-
-              for (let value of data) {
- 
-                let html = "<h2>" + value.username + "</h2>";
-                let div = document.createElement("div");
-                div.innerHTML = html;
-
-                let delbtn = document.createElement("button");
-                delbtn.innerHTML = "Delete";
-
-                container.appendChild(div);
-                container.appendChild(delbtn);
-
-                console.log(value.id)
-                delbtn.addEventListener("click", function (evt) {
-                  deleteUser(value.id);
-                });
-              }
-            } catch (error) {
-              console.log(error);
-            }
+          if (response.status != 200) {
+            throw data.error;
           }
 
-          async function deleteUser(userid) {
-              let url = "/todousers";
-              let token = localStorage.getItem("token");
+          container.innerHTML = '';
 
-              let updata = {
-                id: userid,
-              };
+          for (let value of data) {
+            let html = '<h2>' + value.username + '</h2>';
+            let div = document.createElement('div');
+            div.innerHTML = html;
+            let delbtn = document.createElement('button');
+            delbtn.innerHTML = 'Delete';
+            container.appendChild(div);
+            container.appendChild(delbtn);
+            delbtn.addEventListener('click', function (evt) {
+              deleteUser(value.id);
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
-              let cfg = {
-                method: "DELETE",
-                headers: {
-                  "content-type": "application/json",
-                  authorization: token,
-                },
-                body: JSON.stringify(updata),
-              };
+      async function deleteUser(userid) {
+        let url = '/todousers';
+        let token = localStorage.getItem('token');
 
-              try {
-                let response = await fetch(url, cfg);
-                let data = await response.json();
+        let updata = {
+          id: userid,
+        };
 
-                if (response.status != 200) {
-                  throw data.error;
-                }
+        let cfg = {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json',
+            authorization: token,
+          },
+          body: JSON.stringify(updata),
+        };
 
-                listUsers(); //refresh the list
-              } catch (error) {
-                console.log(error);
-              }
-            }
+        try {
+          let response = await fetch(url, cfg);
+          let data = await response.json();
 
+          if (response.status != 200) {
+            throw data.error;
+          }
           listUsers();
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
-
-
-  
+      listUsers();
     </script>
   </body>
 </html>

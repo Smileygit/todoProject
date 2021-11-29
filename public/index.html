@@ -7,8 +7,6 @@
     <title>TestClient</title>
   </head>
   <body>
-    <!----------- HTML-elements -------------->
-
     <div class="application">
       <div class="header">
         <h1>My TO-DO list</h1>
@@ -41,22 +39,21 @@
       </div>
     </div>
 
-    <!------------- JavaScript --------------->
     <script>
-      let inpUsername = document.getElementById("inpUsername");
-      let inpPassword = document.getElementById("inpPassword");
-      let btnLogin = document.getElementById("btnLogin");
-      let txtResult = document.getElementById("txtResult");
+      let inpUsername = document.getElementById('inpUsername');
+      let inpPassword = document.getElementById('inpPassword');
+      let btnLogin = document.getElementById('btnLogin');
+      let txtResult = document.getElementById('txtResult');
 
-      btnLogin.addEventListener("click", async function (evt) {
-        let url = "/todousers/login";
+      btnLogin.addEventListener('click', async function (evt) {
+        let url = '/todousers/login';
         let credString = createAuthenticationString(
           inpUsername.value,
           inpPassword.value
         );
 
         let cfg = {
-          method: "POST",
+          method: 'POST',
           headers: { authorization: credString },
         };
 
@@ -67,20 +64,17 @@
           if (response.status != 200) {
             throw data.error;
           }
-          localStorage.setItem("token", data.token);
-          document.location.href = "posts.html";
-
+          localStorage.setItem('token', data.token);
+          document.location.href = 'posts.html';
         } catch (error) {
           txtResult.innerHTML = error;
-
         }
       });
 
-      //-----------------------------------
       function createAuthenticationString(username, password) {
-        let combinedStr = username + ":" + password;
+        let combinedStr = username + ':' + password;
         let b64Str = btoa(combinedStr);
-        return "basic " + b64Str;
+        return 'basic ' + b64Str;
       }
     </script>
   </body>
