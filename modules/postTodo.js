@@ -16,8 +16,6 @@ router.get('/todoposts', protect, async function (req, res, next) {
 });
 
 router.post('/todoposts', protect, async function (req, res, next) {
-  console.log(res.locals.username);
-  console.log(res.locals.userid);
   let updata = req.body;
   let userid = res.locals.userid;
 

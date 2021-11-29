@@ -22,8 +22,12 @@
         <textarea id="inpBlogtext" cols="20" rows="3"></textarea><br />
         <button id="btnCreate">Add item</button><br />
         <button id="btnLogout">Log Out</button>
+        <button id="btnManage">Manage</button>
         <h3 id="txtResult"></h3>
+
+
       </div>
+
       <div class="listBox">
         <div id="container"></div>
       </div>
@@ -37,8 +41,13 @@
       let txtResult = document.getElementById("txtResult");
       let container = document.getElementById("container");
       let usernameTxt = document.getElementById("usernameTxt");
-
+      let btnManage = document.getElementById("btnManage");
       let btnLogout = document.getElementById("btnLogout");
+
+
+          btnManage.addEventListener("click", async function (evt) {
+            location.href = "manageusers.html";
+          });      
 
       btnLogout.addEventListener("click", async function (evt) {
         location.href = "index.html";
@@ -105,7 +114,7 @@
 
         let cfg = {
           method: "GET",
-          headers: { authorization: token },
+          headers: { authorization: token }
         };
 
         try {

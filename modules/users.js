@@ -81,16 +81,23 @@ router.post('/todousers/login', async function (req, res, next) {
 
 //list allusers-------------------------
 router.get('/todousers', protect, async function (req, res, next) {
-  res.status(200).send('Hello from GET - /todousers').end();
+  try {
+    let data = await db.getUsers();
+    res.status(200).json(data.rows).end();
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 });
 
 //create a new user-------------------------------
 router.post('/todousers', async function (req, res, next) {
   let credString = req.headers.authorization;
   let cred = authUtils.decodeCred(credString);
+
   let allUsers = await db.getUsers();
 
-  let userCheck = check.checkUnique(cred.username);
+  let userCheck = checkUnique(cred.username);
 
   function checkUnique(inpUser) {
     for (let i = 0; i < allUsers.rows.length; i++) {
@@ -136,8 +143,17 @@ router.post('/todousers', async function (req, res, next) {
 });
 
 //delete a user-----------------
-router.delete('/todousers', async function (req, res, next) {
-  res.status(200).send('Hello from DELETE - /todousers').end();
+router.delete('/todousers', protect, async function (req, res, next) {
+  let updata = req.body;
+  let userid = res.locals.userid;
+
+  try {
+    let data = await db.deleteUser(updata.id);
+
+    res.status(200).json({ msg: '' }).end();
+  } catch (err) {
+    next(err);
+  }
 });
 
 //---------------------------------------------------

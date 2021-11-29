@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>TestClient</title>
+  </head>
+  <body>
+    <!----------- HTML-elements -------------->
+
+    <div class="application">
+      <div class="header">
+        <h1>My TO-DO list</h1>
+        <br />
+      </div>
+
+      <div class="addItemBox">
+        <h2 id="usernameTxt"></h2>
+        <button id="btnToPosts">Back to posts</button>
+        <button id="btnLogout">Log Out</button>
+      </div>
+      <div class="listBox">
+        <div id="container"></div>
+      </div>
+    </div>
+
+    <!------------- JavaScript --------------->
+    <script>
+
+      let txtResult = document.getElementById("txtResult");
+      let container = document.getElementById("container");
+      let usernameTxt = document.getElementById("usernameTxt")
+      let btnToPosts = document.getElementById("btnToPosts");
+      let btnLogout = document.getElementById("btnLogout");
+
+        btnLogout.addEventListener("click", async function (evt) {
+          location.href = "index.html";
+        });
+
+        btnToPosts.addEventListener("click", async function (evt) {
+          location.href = "posts.html";
+        });
+
+        async function listUsers() {
+            let url = "/todousers";
+            let token = localStorage.getItem("token");
+
+            let cfg = {
+              method: "GET",
+              headers: { authorization: token }
+            };
+
+            try {
+              let response = await fetch(url, cfg);
+              let data = await response.json();
+
+              if (response.status != 200) {
+                throw data.error;
+              }
+
+              container.innerHTML = ""; //delete previous content
+
+
+              for (let value of data) {
+ 
+                let html = "<h2>" + value.username + "</h2>";
+                let div = document.createElement("div");
+                div.innerHTML = html;
+
+                let delbtn = document.createElement("button");
+                delbtn.innerHTML = "Delete";
+
+                container.appendChild(div);
+                container.appendChild(delbtn);
+
+                console.log(value.id)
+                delbtn.addEventListener("click", function (evt) {
+                  deleteUser(value.id);
+                });
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
+
+          async function deleteUser(userid) {
+              let url = "/todousers";
+              let token = localStorage.getItem("token");
+
+              let updata = {
+                id: userid,
+              };
+
+              let cfg = {
+                method: "DELETE",
+                headers: {
+                  "content-type": "application/json",
+                  authorization: token,
+                },
+                body: JSON.stringify(updata),
+              };
+
+              try {
+                let response = await fetch(url, cfg);
+                let data = await response.json();
+
+                if (response.status != 200) {
+                  throw data.error;
+                }
+
+                listUsers(); //refresh the list
+              } catch (error) {
+                console.log(error);
+              }
+            }
+
+          listUsers();
+
+
+
+  
+    </script>
+  </body>
+</html>
