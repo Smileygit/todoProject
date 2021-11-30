@@ -1,37 +1,71 @@
-
+* {
+  margin: 50;
+  padding: 50;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 body {
-  background-color: rgb(100, 155, 237);
-  height: 100%;
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+
+  background: linear-gradient(to left, #1b0f61 0%, #4ab66a 100%);
 }
 
-#title { 
-  font-size: xx-large;
-  color: rgb(218, 221, 212);
+.application {
+  height: 600px;
+  display: grid;
+  grid-template-columns: 0.2fr 1.2fr 2.4fr 0.2fr;
+  grid-template-rows: 0.5fr 0.8fr 1.7fr 0.5fr;
+  gap: 5px 5px;
+  grid-auto-flow: column dense;
+  justify-content: stretch;
+  align-content: stretch;
+  justify-items: stretch;
+  align-items: stretch;
+
+  grid-template-areas:
+    '. . . .'
+    '. header listBox .'
+    '. addItemBox listBox .'
+    '. . . .';
 }
 
-
-#button1, #button2{
-  padding: 15px 15px;
-  font-size: 16px;
-  cursor: pointer;
+.header {
+  padding-top: 25px;
+  grid-area: header;
+  background: #fff;
+  box-shadow: 0px 40px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
   text-align: center;
-  text-decoration: none;
-  outline: none;
-  color: rgb(8, 8, 8);
-  background-color: #eeece6;
-  border: none;
-  border-radius: 50px;
-  width: auto;
 }
 
-.container {
-  display: grid;  
-  padding: 10px;
-  justify-items: center;
+.listBox {
+  grid-area: listBox;
+  background: #fff;
+  box-shadow: 0px 40px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: center;
+  overflow-y: scroll;
 }
 
-.create, .view {
-  display: inline-block;
+.addItemBox {
+  padding: 25px;
+  grid-area: addItemBox;
+  background: #fff;
+  box-shadow: 0px 40px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: center;
 }
 
-
+@media only screen and (max-width: 550px) {
+  .application {
+    height: 900px;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 0.5fr 0.8fr 1.7fr 1fr;
+    grid-template-areas:
+      '. header'
+      '. addItemBox'
+      '. listBox';
+  }
+}
